@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Congratulations - Mac Miller</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: #fff;
+            font-family: 'Georgia', serif;
+            overflow: hidden; /* Impede barra de rolagem para focar na animação */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Container da Letra */
+        .lyrics-container {
+            text-align: center;
+            z-index: 2;
+        }
+
+        .line {
+            font-size: 1.8rem;
+            margin: 10px 0;
+            opacity: 0;
+            transform: translateY(-50px);
+            animation: slideDown 8s forwards;
+            line-height: 1.6;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Delay para cada frase descer em ordem */
+        .line:nth-child(1) { animation-delay: 1s; }
+        .line:nth-child(2) { animation-delay: 3s; }
+        .line:nth-child(3) { animation-delay: 5s; }
+        .line:nth-child(4) { animation-delay: 7s; }
+        .line:nth-child(5) { animation-delay: 9s; }
+
+        @keyframes slideDown {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Corações flutuantes */
+        .heart {
+            position: absolute;
+            color: #ff4d4d;
+            font-size: 20px;
+            user-select: none;
+            pointer-events: none;
+            animation: float 10s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Botão para iniciar (Navegadores bloqueiam áudio automático) */
+        #play-button {
+            position: fixed;
+            z-index: 10;
+            padding: 10px 20px;
+            background: #fff;
+            color: #000;
+            border: none;
+            cursor: pointer;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <button id="play-button" onclick="startExperience()">Clique para ouvir e ver</button>
+
+    <audio id="bg-music" loop>
+        <source src="LINK_DA_MUSICA_AQUI.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="lyrics-container">
+        <div class="line">See, a love like mine is too good to be true</div>
+        <div class="line">And you too divine to just be mine</div>
+        <div class="line">You remind me of the color blue</div>
+        <div class="line">Girl, I'm so in love with you, yeah</div>
+        <div class="line">Girl, I'm so in love with you..</div>
+    </div>
+
+    <script>
+        function startExperience() {
+            // Tocar música
+            const audio = document.getElementById('bg-music');
+            audio.play();
+
+            // Esconder botão
+            document.getElementById('play-button').style.display = 'none';
+
+            // Gerar corações continuamente
+            setInterval(createHeart, 300);
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
+            heart.style.opacity = Math.random();
+            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 10000);
+        }
+    </script>
+</body>
+</html>
